@@ -18,10 +18,10 @@ class App extends Component {
     })
     let url = `https://www.googleapis.com/books/v1/volumes?q=${query}&key=AIzaSyCdlfp2y3a52776yi2zkunXcMGxnYbHUCQ&maxResults=10`
     if(this.state.printTypeFilter) {
-      url = url+`&filter=${this.state.printTypeFilter}`
+      url = url+`&printType=${this.state.printTypeFilter}`
     }
     if(this.state.bookTypeFilter) {
-      url = url+`&printType=${this.state.bookTypeFilter}`
+      url = url+`&filter=${this.state.bookTypeFilter}`
     }
     fetch(url)
       .then(res => {
@@ -38,6 +38,19 @@ class App extends Component {
       })
   }
 
+  printTypeChange = e =>{
+    this.setState({
+      printTypeFilter: e.target.value
+    })
+  }
+
+  bookTypeChange = e =>{
+    this.setState({
+      bookTypeFilter: e.target.value
+    })
+  }
+
+
   render() {
     return (
       <div className="App">
@@ -50,7 +63,7 @@ class App extends Component {
           <input type="submit"/>
         </form>
          <div className="filter-menu-print-type">
-                 <select id="dropdown" name="print-type">
+                 <select id="dropdown" name="print-type" onChange={this.printTypeChange}>
                      Print Type:
                      <option value="magazines">magazines</option>
                      <option value="books">books</option>
@@ -58,12 +71,12 @@ class App extends Component {
                  </select>
           </div>
            <div className="filter-menu-book-type">
-                 <select id="dropdown" name="print-type">
+                 <select id="dropdown" name="book-type" onChange={this.bookTypeChange}>
                      Book Type:
                      <option value="partial">partial</option>
                      <option value="full">full</option>
-                     <option value="free ebooks">free ebooks</option>
-                     <option value="paid ebooks">paid ebooks</option>
+                     <option value="free-ebooks">free-ebooks</option>
+                     <option value="paid-ebooks">paid-ebooks</option>
                      <option value="ebooks">ebooks</option>
                      <option value="all" selected>all</option>
                  </select>
