@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import ListBooks from './ListBooks';
 import './App.css';
 
 class App extends Component {
   state = {
-    booksResults: [],
+    bookResults: [],
     printTypeFilter: '',
     bookTypeFilter: '',
     searchTerm: '',
@@ -37,10 +38,11 @@ class App extends Component {
 
   handleSearch = e => {
     e.preventDefault();
+    let query = e.currentTarget.elements.searchTerm.value;
     this.setState({
-      searchTerm: e.target.value
+      searchTerm: query
     })
-    let url = `https://www.googleapis.com/books/v1/volumes?q=${e.target.value}&key=AIzaSyCdlfp2y3a52776yi2zkunXcMGxnYbHUCQ&maxResults=10`
+    let url = `https://www.googleapis.com/books/v1/volumes?q=${query}&key=AIzaSyCdlfp2y3a52776yi2zkunXcMGxnYbHUCQ&maxResults=10`
     if(this.state.printTypeFilter) {
       url = url+`&filter=${this.state.printTypeFilter}`
     }
@@ -60,22 +62,22 @@ class App extends Component {
           bookResults: data,
         })
       })
-    console.log(this.state.bookResults)
   }
-
   // componentDidMount(){
 
   // }
 
   render() {
+    console.log(this.state.bookResults)
     return (
       <div className="App">
         <h1>Google Book Search</h1>
-        <form onSubmit= {this.handleSearchSubmit}>
+        <form onSubmit = {this.handleSearch} >
+          <label>
           Search:
-          <input type="text/submit"
-          onSubmit={e => this.handleSearch(e)}/>
-          <input type="submit" />
+          <input name="searchTerm"/>
+          </label>
+          <input type="submit"/>
         </form>
          <div className="filter-menu-print-type">
                  <select id="dropdown" name="print-type">
@@ -96,7 +98,7 @@ class App extends Component {
                      <option value="all" selected>all</option>
                  </select>
           </div>
-        <div></div>
+        <ListBooks books={this.state.bookResults}/>
         </div>
     );
   }
