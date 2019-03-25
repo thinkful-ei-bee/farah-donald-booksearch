@@ -9,17 +9,45 @@ class App extends Component {
     searchTerm: '',
     }
 
-  handleSearchInput= (e) => {
-    this.setState({
-      searchTerm: e.target.value,
-    })
-  }
+  // handleSearchInput= (e) => {
+  //   this.setState({
+  //     searchTerm: e.target.value,
+  //   })
+  // }
 
-  handleSearchSubmit = (e) => {
-      e.preventDefault();
-    console.log(this.state.searchTerm);
-    console.log(e)
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${this.state.searchTerm}&key=AIzaSyCdlfp2y3a52776yi2zkunXcMGxnYbHUCQ&maxResults=10`)
+  // handleSearchSubmit = (e) => {
+  //     e.preventDefault();
+
+  //   console.log(url)
+  //   fetch(url)
+  //     .then(res => {
+  //       if(!res.ok){
+  //         throw new Error ('Something went wrong.')
+  //       }
+  //       return res;
+  //     })
+  //     .then (res => res.json())
+  //     .then (data => {
+  //       this.setState({
+  //         bookResults: data,
+  //       })
+  //     })
+  //   console.log(this.state.bookResults)
+  // }
+
+  handleSearch = e => {
+    e.preventDefault();
+    this.setState({
+      searchTerm: e.target.value
+    })
+    let url = `https://www.googleapis.com/books/v1/volumes?q=${e.target.value}&key=AIzaSyCdlfp2y3a52776yi2zkunXcMGxnYbHUCQ&maxResults=10`
+    if(this.state.printTypeFilter) {
+      url = url+`&filter=${this.state.printTypeFilter}`
+    }
+    if(this.state.bookTypeFilter) {
+      url = url+`&printType=${this.state.bookTypeFilter}`
+    }
+    fetch(url)
       .then(res => {
         if(!res.ok){
           throw new Error ('Something went wrong.')
@@ -32,19 +60,21 @@ class App extends Component {
           bookResults: data,
         })
       })
+    console.log(this.state.bookResults)
   }
 
-  componentDidMount(){
-    
-  }
+  // componentDidMount(){
+
+  // }
 
   render() {
     return (
       <div className="App">
         <h1>Google Book Search</h1>
-        <form onSubmit= {this.handleSearchSubmit}> 
-          Search: 
-          <input type="text/submit" value={this.state.searchTerm} onChange={this.handleSearchInput}/>
+        <form onSubmit= {this.handleSearchSubmit}>
+          Search:
+          <input type="text/submit"
+          onSubmit={e => this.handleSearch(e)}/>
           <input type="submit" />
         </form>
          <div className="filter-menu-print-type">
