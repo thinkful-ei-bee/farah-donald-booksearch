@@ -10,32 +10,6 @@ class App extends Component {
     searchTerm: '',
     }
 
-  // handleSearchInput= (e) => {
-  //   this.setState({
-  //     searchTerm: e.target.value,
-  //   })
-  // }
-
-  // handleSearchSubmit = (e) => {
-  //     e.preventDefault();
-
-  //   console.log(url)
-  //   fetch(url)
-  //     .then(res => {
-  //       if(!res.ok){
-  //         throw new Error ('Something went wrong.')
-  //       }
-  //       return res;
-  //     })
-  //     .then (res => res.json())
-  //     .then (data => {
-  //       this.setState({
-  //         bookResults: data,
-  //       })
-  //     })
-  //   console.log(this.state.bookResults)
-  // }
-
   handleSearch = e => {
     e.preventDefault();
     let query = e.currentTarget.elements.searchTerm.value;
@@ -63,12 +37,8 @@ class App extends Component {
         })
       })
   }
-  // componentDidMount(){
-
-  // }
 
   render() {
-    console.log(this.state.bookResults)
     return (
       <div className="App">
         <h1>Google Book Search</h1>
